@@ -19,12 +19,12 @@ NFT Generator is a Python application that allows you to generate 1000 unique NF
 ## Installation
 1. Clone this repository to your local machine:
     ```bash
-    git clone https://github.com/yourusername/nft-generator.git
+    git clone https://github.com/yourusername/NFT.git
     ```
 
 2. Navigate to the project directory:
     ```bash
-    cd nft-generator
+    cd NFT
     ```
 
 3. Install the required Python libraries:
@@ -35,7 +35,7 @@ NFT Generator is a Python application that allows you to generate 1000 unique NF
 ## Usage
 1. Run the application:
     ```bash
-    python nft_generator.py
+    python NFT.py
     ```
 
 2. Use the GUI to select the source directory containing your layout images and the output directory to save the generated NFT images.
@@ -43,7 +43,7 @@ NFT Generator is a Python application that allows you to generate 1000 unique NF
 3. Click the "Start Process" button to generate 1000 unique NFT images.
 
 ## File Structure
-- **nft_generator.py**: The main Python script containing the GUI and image generation logic.
+- **NFT.py**: The main Python script containing the GUI and image generation logic.
 - **requirements.txt**: A file listing the required Python libraries.
 
 ## Example
