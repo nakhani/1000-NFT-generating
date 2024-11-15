@@ -2,6 +2,8 @@ import os
 import random
 from PIL import Image
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox
+from PySide6.QtGui import QPalette, QColor
+from PySide6.QtCore import Qt
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -9,6 +11,9 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("NFT Generator")
         self.setGeometry(300, 300, 400, 200)
+
+        # Set up the black mode palette
+        self.setPalette(self.create_dark_palette())
 
         layout = QVBoxLayout()
 
@@ -37,6 +42,48 @@ class MainWindow(QMainWindow):
         self.source_directory = ""
         self.output_directory = ""
 
+        # Apply styling
+        self.apply_styles()
+
+    def create_dark_palette(self):
+        palette = QPalette()
+        palette.setColor(QPalette.Window, QColor(18, 18, 18))
+        palette.setColor(QPalette.WindowText, Qt.white)
+        palette.setColor(QPalette.Base, QColor(25, 25, 25))
+        palette.setColor(QPalette.AlternateBase, QColor(18, 18, 18))
+        palette.setColor(QPalette.ToolTipBase, Qt.black)
+        palette.setColor(QPalette.ToolTipText, Qt.white)
+        palette.setColor(QPalette.Text, Qt.white)
+        palette.setColor(QPalette.Button, QColor(53, 53, 53))
+        palette.setColor(QPalette.ButtonText, Qt.white)
+        palette.setColor(QPalette.BrightText, Qt.red)
+        palette.setColor(QPalette.Link, QColor(42, 130, 218))
+        palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
+        palette.setColor(QPalette.HighlightedText, Qt.black)
+        return palette
+
+    def apply_styles(self):
+        self.setStyleSheet("""
+            QLabel {
+                font-size: 14px;
+                color: #FFFFFF;
+            }
+            QPushButton {
+                background-color: #444444;
+                color: #FFFFFF;
+                border: 1px solid #555555;
+                padding: 8px;
+                font-size: 14px;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: #666666;
+            }
+            QPushButton:pressed {
+                background-color: #333333;
+            }
+        """)
+
     def select_source_directory(self):
         self.source_directory = QFileDialog.getExistingDirectory(self, "Select Source Directory")
         self.label.setText(f"Source directory: {self.source_directory}")
@@ -52,6 +99,9 @@ class MainWindow(QMainWindow):
         if not self.output_directory:
             self.label_output.setText("Please select an output directory first.")
             return
+
+        self.label_output.setText("Processing...")
+        QApplication.processEvents()  # This line forces the GUI to update
 
         layers = {}
         invalid_files = {}
