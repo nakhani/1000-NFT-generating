@@ -1,7 +1,7 @@
 import os
 import random
 from PIL import Image
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QLabel, QVBoxLayout, QWidget, QMessageBox, QLineEdit
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
 
@@ -12,7 +12,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("NFT Generator")
         self.setGeometry(300, 300, 400, 200)
 
-        # Set up the black mode palette
+        # Set up the dark mode palette
         self.setPalette(self.create_dark_palette())
 
         layout = QVBoxLayout()
@@ -31,6 +31,12 @@ class MainWindow(QMainWindow):
         self.select_output_button.clicked.connect(self.select_output_directory)
         layout.addWidget(self.select_output_button)
 
+        self.label_number = QLabel("Enter the number of images to generate:")
+        layout.addWidget(self.label_number)
+
+        self.number_input = QLineEdit()
+        layout.addWidget(self.number_input)
+
         self.process_button = QPushButton("Start Process")
         self.process_button.clicked.connect(self.start_process)
         layout.addWidget(self.process_button)
@@ -41,6 +47,7 @@ class MainWindow(QMainWindow):
 
         self.source_directory = ""
         self.output_directory = ""
+        self.max_combinations = 0
 
         # Apply styling
         self.apply_styles()
@@ -94,14 +101,11 @@ class MainWindow(QMainWindow):
 
     def start_process(self):
         if not self.source_directory:
-            self.label.setText("Please select a source directory first.")
+            QMessageBox.warning(self, "Selection Error", "Please select a source directory.")
             return
         if not self.output_directory:
-            self.label_output.setText("Please select an output directory first.")
+            QMessageBox.warning(self, "Selection Error", "Please select an output directory.")
             return
-
-        self.label_output.setText("Processing...")
-        QApplication.processEvents()  # This line forces the GUI to update
 
         layers = {}
         invalid_files = {}
@@ -129,8 +133,25 @@ class MainWindow(QMainWindow):
             self.label.setText("No valid PNG image folders found. Please check your source directory.")
             return
 
+        # Calculate the maximum number of combinations
+        self.max_combinations = 1
+        for files in layers.values():
+            self.max_combinations *= len(files)
+
+        try:
+            num_images = int(self.number_input.text())
+            if num_images > self.max_combinations:
+                QMessageBox.warning(self, "Input Error", f"Maximum number you can use is {self.max_combinations}.")
+                return
+        except ValueError:
+            QMessageBox.warning(self, "Input Error", "Please enter a valid number.")
+            return
+
+        self.label_output.setText("Processing...")
+        QApplication.processEvents()  # This line forces the GUI to update
+
         lsid = set()
-        for i in range(1, 1001):
+        for i in range(1, num_images + 1):
             while True:
                 selected_layers = {layer: random.choice(layers[layer]) for layer in layers}
                 combination = ''.join(selected_layers.values())
