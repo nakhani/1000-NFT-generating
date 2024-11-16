@@ -1,11 +1,12 @@
 # NFT Generator
 
-NFT Generator is a Python application that allows you to generate 1000 unique NFT images by combining various layers from different subfolders. The application includes a graphical user interface (GUI) built with PySide6.
+NFT Generator is a Python application that allows you to generate unique NFT images by combining various layers from different subfolders. The application includes a graphical user interface (GUI) built with PySide6.
 
 ## Features
 - Select a source directory containing subfolders with layout images.
 - Select an output directory to save the generated NFT images.
-- Generates 1000 unique NFT images by combining random layers.
+- Input the number of image which should be generated.
+- Generates unique NFT images by combining random layers.
 - Ensures only PNG images are processed.
 - Alerts the user if invalid files (non-PNG) are found in the subfolders.
 
@@ -40,7 +41,9 @@ NFT Generator is a Python application that allows you to generate 1000 unique NF
 
 2. Use the GUI to select the source directory containing your layout images and the output directory to save the generated NFT images.
 
-3. Click the "Start Process" button to generate 1000 unique NFT images.
+3. Input the number of images which you want to be generated.
+
+4. Click the "Start Process" button to generate 1000 unique NFT images.
 
 ## File Structure
 - **NFT.py**: The main Python script containing the GUI and image generation logic.
