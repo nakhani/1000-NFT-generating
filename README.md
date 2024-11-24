@@ -20,12 +20,12 @@ NFT Generator is a Python application that allows you to generate unique NFT ima
 ## Installation
 1. Clone this repository to your local machine:
     ```bash
-    git clone https://github.com/yourusername/NFT.git
+    git clone https://github.com/nakhani/NFT-generating.git
     ```
 
 2. Navigate to the project directory:
     ```bash
-    cd NFT
+    cd NFT-generating
     ```
 
 3. Install the required Python libraries:
